@@ -16,13 +16,16 @@ pub enum ValidationError {
     #[error("Content cannot be empty")]
     EmptyContent,
 
+    #[error("chunk size must be greater than zero")]
+    InvalidChunkSize,
+
     #[error("content too large: {size} bytes (max: {max}")]
     ContentTooLarge { size: usize, max: usize },
 
     #[error("missing required field: {field}")]
     MissingField { field: &'static str },
 
-    #[error("missing required field: {field}")]
+    #[error("empty required field: {field}")]
     EmptyField { field: &'static str },
 }
 
