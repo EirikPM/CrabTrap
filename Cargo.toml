@@ -1,0 +1,70 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/domain",
+    "crates/store",
+    "crates/ingest",
+    "crates/embeddings",
+    "crates/rag",
+    "crates/app",
+    "crates/cli",
+    # "crates/api",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+
+
+[workspace.dependencies]
+# Error handling
+anyhow = "1"
+thiserror = "2"
+
+# Serde
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Crypto
+sha2 = "0.10"
+hex = "0.4"
+
+# Common types# Crypto
+uuid = { version = "1", features = ["v4", "v7", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+url = { version = "2", features = ["serde"] }
+
+# Async + HTTP
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal"] }
+reqwest = { version = "0.12", default-features = false, features = [
+    "json",
+    "gzip",
+    "brotli",
+    "rustls-tls",
+] }
+
+# Logging/Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# CLI / API
+clap = { version = "4", features = ["derive"] }
+# axum = "0.7"
+
+# Ingest + sanitization
+feed-rs = "2"
+ammonia = "4"
+
+# Database
+sqlx = { version = "0.8", default-features = false, features = [
+    "runtime-tokio-rustls",
+    "postgres",
+    "uuid",
+    "chrono",
+    "macros",
+] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
